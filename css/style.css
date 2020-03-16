@@ -1,0 +1,11 @@
+body {
+   background: url("https://img2.thuthuatphanmem.vn/uploads/2018/12/30/video-background-dep_110344690.jpg");
+}
+#container {
+   width: 400px;
+   margin: 10% auto;
+}
+#canvas {
+   background-color: #40e0d0;
+   border-radius: 50%;
+}
