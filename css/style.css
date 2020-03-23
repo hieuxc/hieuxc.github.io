@@ -1,11 +1,83 @@
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: "Muli", sans-serif;
+}
+html {
+   scroll-behavior: smooth;
+}
 body {
-   background: url("https://img2.thuthuatphanmem.vn/uploads/2018/12/30/video-background-dep_110344690.jpg");
+   background-color: #202020;
 }
-#container {
-   width: 400px;
-   margin: 10% auto;
+.container {
+   height: 100vh;
 }
-#canvas {
-   background-color: #40e0d0;
-   border-radius: 50%;
+.nav{
+   background-color: #151515;
+   position: absolute;
+   left: 0;
+   right: 0;
 }
+.navbar{
+   display: flex;
+   justify-content: space-between;
+   color: #dedede;
+}
+.logo{
+   display: inline-block;
+   margin-left: 5%;
+   font-size: 1.5rem;
+   font-weight: 700;
+   padding: 1rem;
+}
+ul{
+   display: inline-block;
+   margin-right: 5%;
+   list-style: none;
+   padding: 0;
+}
+li{
+   display: inline-block;
+}
+a{
+   text-decoration: none;
+   color: rgb(222, 222, 222);
+   line-height: 4rem;
+   padding: 1rem;
+}
+.home{
+   color: #dedede;
+}
+.home_info{
+   margin-left: 10%;
+   display: flex;
+   height: 100vh;
+   align-items: center;
+}
+.home_info_content{
+   padding-left: 1.5rem;
+   border-left: 5px solid #dedede;
+   z-index: 5;
+}
+.info1{
+   font-size: 2rem;
+   font-weight: 700;
+}
+.info2{
+   font-size: 4rem;
+   font-weight: 900;
+   margin-top: 1rem;
+}
+.info3{
+   font-size: 1.3rem;
+   margin-top: 1rem;
+}
+.home_image img{
+   height: 90%;
+   position: absolute;
+   top: 10%;
+   right: 0;
+   opacity: 0.7;
+}
+

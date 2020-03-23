@@ -1,19 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <link
+         href="https://fonts.googleapis.com/css?family=Muli:400,700,900&display=swap&subset=vietnamese"
+         rel="stylesheet"
+      />
+      <link rel="stylesheet" href="css/style.css" />
+   </head>
 
-<head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>hieuxc</title>
-   <link rel="stylesheet" href="./css/style.css" />
-</head>
-
-<body>
-   <div id="container">
-      <canvas id="canvas" width="400" height="400"></canvas>
-   </div>
-
-   <script src="./js/index.js"></script>
-</body>
-
+   <body>
+      <div class="nav">
+         <div class="navbar">
+            <div class="logo">HieuXC</div>
+            <ul>
+               <li><a href="#home">Home</a></li>
+               <li><a href="#about">About</a></li>
+               <li><a href="#skills">Skill</a></li>
+               <li><a href="#project">Project</a></li>
+            </ul>
+         </div>
+      </div>
+      <div class="container home" id="home">
+         <div class="home_info">
+            <div class="home_info_content">
+               <div class="info1">Hello, My name is</div>
+               <div class="info2">Phan Quang Hiếu</div>
+               <div class="info3">Who will become Web Developer</div>
+            </div>
+         </div>
+         <div class="home_image">
+            <img src="img/pqh.png" alt="" />
+         </div>
+      </div>
+      <div class="container about" id="about">
+         <h1>About</h1>
+         <div class="about_info">
+            <p>
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, neque. Ipsam id molestiae amet
+               placeat cumque accusamus labore nemo debitis, ex voluptate, laborum quos inventore eligendi? Omnis iusto
+               delectus tenetur?
+            </p>
+            <p>
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa mollitia non, quas iure repellendus
+               voluptatibus culpa quam maxime, corporis dolor, quae ipsam exercitationem labore neque vel nobis possimus
+               autem id!
+            </p>
+         </div>
+      </div>
+      <div class="container skills" id="skills">
+         <h1>Skills</h1>
+         <div class="skills_info">
+            <p>
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque odio aspernatur, tenetur assumenda
+               laboriosam enim quod minus officiis libero tempore quibusdam quidem ipsam deserunt porro reiciendis iste?
+               Nam, laborum? Voluptatem?
+            </p>
+         </div>
+         <div class="html">
+            <div class="tag_html">
+               <p>HTML</p>
+            </div>
+            <div class="progressbar">
+               <div class="bar_html"></div>
+            </div>
+         </div>
+         <div class="html">
+            <div class="tag_css">
+               <p>CSS</p>
+            </div>
+            <div class="progressbar">
+               <div class="bar_css"></div>
+            </div>
+         </div>
+         <div class="html">
+            <div class="tag_javascript">
+               <p>Javascript</p>
+            </div>
+            <div class="progressbar">
+               <div class="bar_javascript"></div>
+            </div>
+         </div>
+         <div class="html">
+            <div class="tag_php">
+               <p>PHP</p>
+            </div>
+            <div class="progressbar">
+               <div class="bar_php"></div>
+            </div>
+         </div>
+      </div>
+      <div class="container project" id="project">
+         <h1>Project</h1>
+         <div class="list_project">
+            <button id="laravel">Laravel</button>
+            <button id="nodejs">Nodejs</button>
+         </div>
+         <div class="laravel_project">
+            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
+            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
+            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
+         </div>
+      </div>
+   </body>
 </html>
