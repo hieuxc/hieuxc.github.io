@@ -8,101 +8,128 @@
          href="https://fonts.googleapis.com/css?family=Muli:400,700,900&display=swap&subset=vietnamese"
          rel="stylesheet"
       />
+      <link
+         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+         rel="stylesheet"
+         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+         crossorigin="anonymous"
+      />
       <link rel="stylesheet" href="css/style.css" />
    </head>
 
    <body>
       <div class="nav">
+         <div class="logo">HieuXC</div>
          <div class="navbar">
-            <div class="logo">HieuXC</div>
             <ul>
-               <li><a href="#home">Home</a></li>
-               <li><a href="#about">About</a></li>
-               <li><a href="#skills">Skill</a></li>
-               <li><a href="#project">Project</a></li>
+               <li><a href="#home" class="link active">Home</a></li>
+               <li><a href="#about" class="link">About</a></li>
+               <li><a href="#skills" class="link">Skill</a></li>
+               <li><a href="#project" class="link">Project</a></li>
             </ul>
          </div>
+         <div class="menu_toggle"><i class="fa fa-bars" aria-hidden="true"></i></div>
       </div>
       <div class="container home" id="home">
          <div class="home_info">
             <div class="home_info_content">
                <div class="info1">Hello, My name is</div>
                <div class="info2">Phan Quang Hiếu</div>
-               <div class="info3">Who will become Web Developer</div>
+               <div class="info3">Internship Developer</div>
             </div>
          </div>
-         <div class="home_image">
-            <img src="img/pqh.png" alt="" />
-         </div>
+         <div class="home_image"></div>
       </div>
       <div class="container about" id="about">
          <h1>About</h1>
          <div class="about_info">
+            <h2>I'm Phan Quang Hiếu</h2>
             <p>
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, neque. Ipsam id molestiae amet
-               placeat cumque accusamus labore nemo debitis, ex voluptate, laborum quos inventore eligendi? Omnis iusto
-               delectus tenetur?
+               Now, I am a second-year student at the Posts and Telecommunications Institute of Technology
             </p>
-            <p>
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa mollitia non, quas iure repellendus
-               voluptatibus culpa quam maxime, corporis dolor, quae ipsam exercitationem labore neque vel nobis possimus
-               autem id!
-            </p>
+            <div class="infomation">
+               <div class="text">
+                  <label>Birthday:</label>
+                  <span>8th Apr 2000</span>
+               </div>
+               <div class="text">
+                  <label>Email:</label>
+                  <span>phanhieu000248@gmail.com</span>
+               </div>
+               <div class="text">
+                  <label>Age:</label>
+                  <span>20</span>
+               </div>
+               <div class="text">
+                  <label>Phone:</label>
+                  <span>0977275069</span>
+               </div>
+               <div class="text">
+                  <label>Address:</label>
+                  <span> Hà Đông, Hà Nội</span>
+               </div>
+               <div class="text">
+                  <label>Github:</label>
+                  <span>github.com/hieuxc</span>
+               </div>
+            </div>
+            <div class="social_link">
+               <a href="https://www.facebook.com/phanhieu15"><i class="fa fa-facebook"></i></a>
+               <a href="https://github.com/hieuxc"><i class="fa fa-github"></i></a>
+            </div>
          </div>
       </div>
       <div class="container skills" id="skills">
          <h1>Skills</h1>
          <div class="skills_info">
-            <p>
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque odio aspernatur, tenetur assumenda
-               laboriosam enim quod minus officiis libero tempore quibusdam quidem ipsam deserunt porro reiciendis iste?
-               Nam, laborum? Voluptatem?
-            </p>
-         </div>
-         <div class="html">
-            <div class="tag_html">
+            <div class="skills_content">
+               <div class="chart" data-percent="75">75%</div>
                <p>HTML</p>
             </div>
-            <div class="progressbar">
-               <div class="bar_html"></div>
-            </div>
-         </div>
-         <div class="html">
-            <div class="tag_css">
+            <div class="skills_content">
+               <div class="chart" data-percent="60">60%</div>
                <p>CSS</p>
             </div>
-            <div class="progressbar">
-               <div class="bar_css"></div>
-            </div>
-         </div>
-         <div class="html">
-            <div class="tag_javascript">
+            <div class="skills_content">
+               <div class="chart" data-percent="51">51%</div>
                <p>Javascript</p>
             </div>
-            <div class="progressbar">
-               <div class="bar_javascript"></div>
-            </div>
-         </div>
-         <div class="html">
-            <div class="tag_php">
+            <div class="skills_content">
+               <div class="chart" data-percent="40">40%</div>
                <p>PHP</p>
-            </div>
-            <div class="progressbar">
-               <div class="bar_php"></div>
             </div>
          </div>
       </div>
       <div class="container project" id="project">
          <h1>Project</h1>
-         <div class="list_project">
-            <button id="laravel">Laravel</button>
-            <button id="nodejs">Nodejs</button>
-         </div>
-         <div class="laravel_project">
-            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
-            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
-            <a href=""><img src="img/laraval_1.jpg" alt=""/></a>
+         <div class="project_info">
+            <div class="list_btn">
+               <button class="btn" id="defaultOpen" onclick="status(event,'Laravel')">Laravel</button>
+               <button class="btn" onclick="status(event,'Nodejs')">Nodejs</button>
+            </div>
+            <div class="list_project">
+               <div class="project_content" id="Laravel">
+                  <div class="content">
+                     <div class="detail">
+                        <img src="img/laravel-ecommerce.png" alt="" />
+                        <h3>Ecommerce Website</h3>
+                        <a href="https://github.com/hieuxc/laravel-project-ecommerce-website">Github Link</a>
+                     </div>
+                  </div>
+               </div>
+               <div class="project_content" id="Nodejs">
+                  <div class="content"></div>
+               </div>
+            </div>
          </div>
       </div>
+
+      <script
+         src="https://code.jquery.com/jquery-3.4.1.min.js"
+         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+         crossorigin="anonymous"
+      ></script>
+      <script src="js/jquery.easypiechart.min.js"></script>
+      <script src="js/index.js"></script>
    </body>
 </html>
