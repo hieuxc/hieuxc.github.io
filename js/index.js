@@ -1,11 +1,3 @@
-$(function () {
-   $('.chart').easyPieChart({
-      barColor: '#17d3e6',
-      scaleColor: false,
-      lineWidth: 10,
-      trackColor: '#333333'
-   });
-});
 function status(event, name) {
    let project_content = $('.project_content');
    for (let i = 0; i < project_content.length; i++) {
@@ -33,4 +25,12 @@ $(document).ready(function () {
    $('.menu_toggle').click(function () {
       $('.navbar').toggleClass('active');
    })
+   $(function () {
+      $('.chart').easyPieChart({
+         barColor: '#17d3e6',
+         scaleColor: false,
+         lineWidth: 10,
+         trackColor: '#333333'
+      });
+   });
 })
