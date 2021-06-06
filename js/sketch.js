@@ -1,10 +1,10 @@
 let cols, rows;
 let w = 60;
-let grid = [];
-let current, numGen = 2;
-let stack = [null];
+let grid = [], cellResults = [];
+let current;
+let stack = [null], stackDFS = [], stackAStar = [];
 let cellStart, cellEnd, cellTrace, cellFind, numClickCell = 0;
-let stackDFS = [];
+let DFS = true, AStar = false, searching = false;
 function setup() {
   createCanvas(600, 600);
   cols = floor(width / w);
@@ -24,12 +24,11 @@ function draw() {
   background(10);
   for (let i = 0; i < grid.length; i++) {
     grid[i].show();
-    if (grid[i] === cellStart || grid[i] === cellEnd) {
-      grid[i].showPathSE()
-    }
+    if (grid[i] === cellStart) grid[i].showCellStart()
+    else if (grid[i] === cellEnd) grid[i].showCellEnd()
     else {
-      if (grid[i].vDFS) grid[i].showPath()
-      if (grid[i].isShowPathF) grid[i].showPathF()
+      if (grid[i].visitedSearch) grid[i].showCell()
+      if (grid[i].isCellResult) grid[i].showCellResult()
     }
   }
 
@@ -37,7 +36,7 @@ function draw() {
   if (current instanceof Cell) {
     current.visited = true;
     current.highlight();
-    next = current.checkNeighbors();
+    next = current.checkGenerate();
   }
   if (next) {
     next.visited = true;
@@ -48,17 +47,24 @@ function draw() {
     current = stack.pop();
   }
   if (numClickCell === 2) {
-    frameRate(30)
+    frameRate(20)
     let next
     if (cellFind instanceof Cell) {
-      cellFind.vDFS = true;
-      next = cellFind.checkDFS();
+      cellFind.visitedSearch = true;
+      if (DFS) next = cellFind.checkDFS();
+      if (AStar) next = cellFind.checkAStar();
     }
     if (next) {
       next.prevCell = cellFind
-      next.vDFS = true;
+      next.visitedSearch = true;
       if (next === cellEnd) {
         numClickCell = 3
+        let cellTemp = cellEnd
+        while (cellTemp !== cellStart) {
+          cellResults.push(cellTemp)
+          cellTemp = cellTemp.prevCell
+        }
+        cellResults.push(cellStart)
         cellTrace = cellEnd.prevCell
       }
       stackDFS.push(cellFind);
@@ -68,10 +74,14 @@ function draw() {
     }
   }
   if (numClickCell === 3) {
-    if (cellTrace === cellStart) numClickCell = 4
+    if (cellTrace === cellStart) {
+      numClickCell = 4
+      searching = false
+    }
     else {
-      cellTrace.isShowPathF = true;
-      cellTrace.vDFS = false;
+      cellTrace.nextCell = cellResults.find(c => c.prevCell === cellTrace)
+      cellTrace.isCellResult = true;
+      cellTrace.visitedSearch = false;
       cellTrace = cellTrace.prevCell
     }
   }
@@ -81,11 +91,12 @@ function Cell(i, j) {
   this.j = j;
   this.walls = [true, true, true, true];
   this.visited = false;
-  this.vDFS = false;
-  this.isShowPathF = false;
+  this.visitedSearch = false;
+  this.isCellResult = false;
   this.prevCell = null;
-  this.checkNeighbors = function () {
-    let neighbors = [];
+  this.nextCell = null;
+  this.checkGenerate = function () {
+    let cellNext = [];
 
     let top = grid[index(i, j - 1)];
     let right = grid[index(i + 1, j)];
@@ -93,36 +104,56 @@ function Cell(i, j) {
     let left = grid[index(i - 1, j)];
 
     if (top && !top.visited) {
-      neighbors.push(top);
+      cellNext.push(top);
     }
     if (right && !right.visited) {
-      neighbors.push(right);
+      cellNext.push(right);
     }
     if (bottom && !bottom.visited) {
-      neighbors.push(bottom);
+      cellNext.push(bottom);
     }
     if (left && !left.visited) {
-      neighbors.push(left);
+      cellNext.push(left);
     }
 
-    if (neighbors.length > 0) {
-      let r = floor(random(0, neighbors.length));
-      return neighbors[r];
+    if (cellNext.length > 0) {
+      let r = floor(random(0, cellNext.length));
+      return cellNext[r];
     } else {
       return undefined;
     }
   };
   this.checkDFS = function () {
-    let neighbors = [];
+    let cellNext = [];
     let top = grid[index(i, j - 1)];
     let right = grid[index(i + 1, j)];
     let bottom = grid[index(i, j + 1)];
     let left = grid[index(i - 1, j)];
-    if (!this.walls[0] && !top.vDFS) neighbors.push(top)
-    if (!this.walls[1] && !right.vDFS) neighbors.push(right)
-    if (!this.walls[2] && !bottom.vDFS) neighbors.push(bottom)
-    if (!this.walls[3] && !left.vDFS) neighbors.push(left)
-    return neighbors[0]
+    if (!this.walls[0] && !top.visitedSearch) cellNext.push(top)
+    if (!this.walls[1] && !right.visitedSearch) cellNext.push(right)
+    if (!this.walls[2] && !bottom.visitedSearch) cellNext.push(bottom)
+    if (!this.walls[3] && !left.visitedSearch) cellNext.push(left)
+    return cellNext[0]
+  }
+  this.checkAStar = function () {
+    let cellNext = [];
+    let top = grid[index(i, j - 1)];
+    let right = grid[index(i + 1, j)];
+    let bottom = grid[index(i, j + 1)];
+    let left = grid[index(i - 1, j)];
+    if (!this.walls[0] && !top.visitedSearch) cellNext.push(top)
+    if (!this.walls[1] && !right.visitedSearch) cellNext.push(right)
+    if (!this.walls[2] && !bottom.visitedSearch) cellNext.push(bottom)
+    if (!this.walls[3] && !left.visitedSearch) cellNext.push(left)
+    let dMin = 9999999999999, cellResult;
+    for (let cell of cellNext) {
+      let d = dist(cell.i, cell.j, cellEnd.i, cellEnd.j);
+      if (d < dMin) {
+        dMin = d
+        cellResult = cell
+      }
+    }
+    return cellResult
   }
   this.highlight = function () {
     let x = this.i * w;
@@ -131,27 +162,51 @@ function Cell(i, j) {
     fill("green");
     rect(x + 5, y + 5, w - 10, w - 10);
   };
-  this.showPath = function () {
+  this.showCell = function () {
     let x = this.i * w;
     let y = this.j * w;
     noStroke();
     fill("yellow");
-    // rect(x + 20, y + 20, w - 40, w - 40);
     circle(x + 30, y + 30, 20)
   }
-  this.showPathF = function () {
+  this.showCellResult = function () {
     let x = this.i * w;
     let y = this.j * w;
-    noStroke();
-    fill("red");
-    rect(x + 20, y + 20, w - 40, w - 40);
+    strokeWeight(8);
+    stroke("red");
+    let px = this.prevCell.i - this.i
+    if (px === 1) line(x + 30, y + 30, x + 60, y + 30);
+    if (px === -1) line(x + 30, y + 30, x, y + 30);
+    let py = this.prevCell.j - this.j
+    if (py === 1) line(x + 30, y + 30, x + 30, y + 60);
+    if (py === -1) line(x + 30, y + 30, x + 30, y);
+
+    let nx = this.nextCell.i - this.i
+    if (nx === 1) line(x + 30, y + 30, x + 60, y + 30);
+    if (nx === -1) line(x + 30, y + 30, x, y + 30);
+    let ny = this.nextCell.j - this.j
+    if (ny === 1) line(x + 30, y + 30, x + 30, y + 60);
+    if (ny === -1) line(x + 30, y + 30, x + 30, y);
   }
-  this.showPathSE = function () {
+  this.showCellStart = function () {
     let x = this.i * w;
     let y = this.j * w;
-    noStroke();
+    stroke(0)
+    textSize(40)
     fill("green");
-    rect(x + 20, y + 20, w - 40, w - 40);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER)
+    text("S", x + 30, y + 30)
+  }
+  this.showCellEnd = function () {
+    let x = this.i * w;
+    let y = this.j * w;
+    stroke(0)
+    textSize(40)
+    fill("green");
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER)
+    text("E", x + 30, y + 30)
   }
   this.show = function () {
     let x = this.i * w;
@@ -170,14 +225,8 @@ function Cell(i, j) {
     if (this.walls[3]) {
       line(x, y + w, x, y);
     }
-
-    // if (this.visited) {
-    //   noStroke();
-    //   fill(255, 0, 255, 100);
-    //   rect(x + 4, y + 4, w, w);
-    // }
   };
-}s
+}
 function index(i, j) {
   if (i < 0 || j < 0 || i > cols - 1 || j > rows - 1) {
     return -1;
@@ -203,29 +252,54 @@ function removeWalls(a, b) {
     b.walls[0] = false;
   }
 }
-function mousePressed() {
+// function mousePressed() {
+function touchStarted() {
   let i = index(floor(mouseX / w), floor(mouseY / w))
   if (i >= 0 && i < rows * cols) {
     if (numClickCell === 0) {
       cellStart = grid[i]
       numClickCell = 1
     } else if (numClickCell === 1) {
-      cellEnd = grid[i]
-      cellFind = cellStart
-      numClickCell = 2
-    } else {
-      for (let i = 0; i < grid.length; i++) {
-        grid[i].vDFS = false;
-        grid[i].isShowPathF = false;
+      if (grid[i] !== cellStart) {
+        cellEnd = grid[i]
+        cellFind = cellStart
+        searching = true
+        numClickCell = 2
       }
-      cellStart = null
-      cellEnd = null
-      numClickCell = 0
+    } else {
+      resetCell()
     }
   }
+  return false;
 }
-document.getElementById("btnFind").addEventListener("click", function () {
-  w = 30
-  setup()
-  daw()
+function resetCell() {
+  for (let i = 0; i < grid.length; i++) {
+    grid[i].visitedSearch = false;
+    grid[i].isCellResult = false;
+  }
+  cellStart = null
+  cellEnd = null
+  cellResults = []
+  numClickCell = 0
+}
+
+let DFSInputElement = document.getElementById("DFSInput")
+let AStarInputElement = document.getElementById("AStarInput")
+document.getElementById("DFS").addEventListener("click", function () {
+  if (!searching) {
+    DFSInputElement.checked = true
+    AStarInputElement.checked = false
+    DFS = true;
+    AStar = false;
+    resetCell()
+  }
+})
+document.getElementById("AStar").addEventListener("click", function () {
+  if (!searching) {
+    DFSInputElement.checked = false
+    AStarInputElement.checked = true
+    DFS = false;
+    AStar = true;
+    resetCell()
+  }
 })
